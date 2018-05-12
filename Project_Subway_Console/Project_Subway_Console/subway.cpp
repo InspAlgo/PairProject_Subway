@@ -6,14 +6,14 @@ Subway::Subway()
 	this->station_name = new string[STATION_NUM];
 	this->station_link = new Link*[STATION_NUM];
 	this->station_path = new int*[STATION_NUM];
-	for (int i = 0; i < STATION_NUM; i++) //除自身外一开始每个点都不可达
+	for (int i = 0; i < STATION_NUM; i++) // 除自身外一开始每个点都不可达
 	{
 		station_name[i] = "";
 		this->station_link[i] = new Link[STATION_NUM];
 		this->station_path[i] = new int[STATION_NUM];
 		for (int j = 0; j < STATION_NUM; j++)
 		{
-			station_path[i][j] = -1; //初值为-1，即没有路径
+			station_path[i][j] = -1;  // 初值为-1，即没有路径
 			if (i == j)
 				station_link[i][j].value = 0;
 			else
@@ -103,16 +103,16 @@ void Subway::Dijkstra()
 		dis[i] = this->station_link[this->start_station_][i].value;
 		if (dis[i] < INF)  // start_station到i有直接路径
 		{
-			this->station_path[i][0] = this->start_station_;
-			this->station_path[i][1] = i;
+			this->station_path[i][0] = this->start_station_;  // start_station_到i最短路径经过的第一个顶点
+			this->station_path[i][1] = i;  // start_station到i最短路径经过的第二个顶点
 		}
 	}
 
 	/* 核心语句 */
 	for (int i = 0; i < STATION_NUM - 1; i++)
 	{
-		int min = INF;
-		int u;
+		int min = INF;  // 记录最小dis[i]
+		int u;  // 记录小dis[i]的点
 		for (int j = 0; j < STATION_NUM; j++)
 		{
 			if (book[j] == 0 && dis[j] < min)
