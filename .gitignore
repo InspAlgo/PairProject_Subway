@@ -1,3 +1,21 @@
+# Personal Configuration
+.vs/*
+Project_Subway_Console/.vs/*
+Project_Subway_Console/Debug/*
+Project_Subway_Console/Release/*
+Project_Subway_Console/x64/*
+Project_Subway_Console/TestResults/*
+Project_Subway_Console/Project_Subway_Console/Debug/*
+Project_Subway_Console/Project_Subway_Console/Release/*
+Project_Subway_Console/Project_Subway_Console/x64/*
+Project_Subway_Console/UnitTest1/x64/*
+Project_Subway_Console/UnitTest1/Debug/*
+*.suo
+*.db
+*.psess
+*.vspx
+
+
 # Prerequisites
 *.d
 
