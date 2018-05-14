@@ -15,6 +15,10 @@ void Input::InputHandle(int argc, char **argv)
 		this->from = string(argv[2]);
 		this->to = string(argv[3]);
 	}
+	else if (this->order == "/c" && argc == 3)
+	{
+		this->from = string(argv[2]);
+	}
 	else
 	{
 		cout << "Error: Invalid input parameter." << endl
@@ -37,5 +41,11 @@ void Input::SelectModel(Subway &subway)
 		subway.GetTwoStation(this->from, this->to);
 		subway.Dijkstra();
 		subway.PrintPath();
+	}
+
+	if (this->order == "/c")
+	{
+		subway.ReadFile();
+		subway.PrintBeijingSubwayLine(this->from);
 	}
 }

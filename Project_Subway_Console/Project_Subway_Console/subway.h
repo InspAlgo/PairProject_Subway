@@ -1,6 +1,6 @@
 #pragma once
-#define INF 9999999
-#define STATION_NUM 300
+#define INF 999
+#define STATION_NUM 320
 using namespace std;
 
 struct Link
@@ -17,6 +17,7 @@ public:
 	void Dijkstra();
 	void PrintPath();
 	void GetTwoStation(string start_station, string end_station);
+	void PrintBeijingSubwayLine(string subway_line);
 private:
 	string *station_name;
 	map<string, int>name_to_num;  // 将节点名称映射到节点编号
