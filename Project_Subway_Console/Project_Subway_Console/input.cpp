@@ -5,12 +5,11 @@ void Input::InputHandle(int argc, char **argv)
 {
 	this->order = string(argv[1]);
 
-	if (this->order == "/a")
+	if (this->order == "/a" && argc == 3)
 	{
-		cout << "Error: This feature is not supported." << endl;
-		exit(-1);
+		this->from = string(argv[2]);
 	}
-	else if (this->order == "/b" && argc == 4)
+	else if ((this->order == "/b" || this->order == "/d") && argc == 4)
 	{
 		this->from = string(argv[2]);
 		this->to = string(argv[3]);
@@ -35,6 +34,16 @@ void Input::InputHandle(int argc, char **argv)
 
 void Input::SelectModel(Subway &subway)
 {
+	/* 从某个站开始全遍历并返回 */
+	if (this->order == "/a")
+	{
+		subway.ResetValue(this->order);
+		subway.ReadFile();
+		subway.GetSingleStation(this->from);
+		subway.Fleury();
+	}
+
+	/* 求任意两个站点的最短路径 */
 	if (this->order == "/b")
 	{
 		subway.ReadFile();
@@ -43,9 +52,22 @@ void Input::SelectModel(Subway &subway)
 		subway.PrintPath();
 	}
 
+	/* 打印某条地铁线上所有站点 */
 	if (this->order == "/c")
 	{
 		subway.ReadFile();
 		subway.PrintBeijingSubwayLine(this->from);
 	}
+
+	/* 求任意两个站点的最少换乘路径 */
+	if (this->order == "/d")
+	{
+		subway.ResetValue(this->order);
+		subway.ReadFile();
+		subway.GetTwoStation(this->from, this->to);
+		subway.Transfer();
+		subway.Dijkstra();
+		subway.PrintPath();
+	}
+
 }
