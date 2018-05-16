@@ -37,10 +37,9 @@ void Input::SelectModel(Subway &subway)
 	/* 从某个站开始全遍历并返回 */
 	if (this->order == "/a")
 	{
-		subway.ResetValue(this->order);
 		subway.ReadFile();
 		subway.GetSingleStation(this->from);
-		subway.Fleury();
+		subway.Traverse();
 	}
 
 	/* 求任意两个站点的最短路径 */
@@ -62,7 +61,6 @@ void Input::SelectModel(Subway &subway)
 	/* 求任意两个站点的最少换乘路径 */
 	if (this->order == "/d")
 	{
-		subway.ResetValue(this->order);
 		subway.ReadFile();
 		subway.GetTwoStation(this->from, this->to);
 		subway.Transfer();

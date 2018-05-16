@@ -9,27 +9,6 @@ struct Link
 	string line_name;  // 地铁线名称
 };
 
-struct Stack
-{
-	int top;
-	int *station;
-};
-
-struct Station
-{
-	int last_station = -1;
-	string line;
-	string name;
-};
-
-struct SubLine
-{
-	string line_name;
-	vector<string> stations;
-	bool is_circle = false;
-	bool is_two_dir = true;
-};
-
 class Subway
 {
 public:
@@ -40,20 +19,21 @@ public:
 	void GetTwoStation(string start_station, string end_station);
 	void GetSingleStation(string start_station);
 	void PrintBeijingSubwayLine(string subway_line);
-	void ResetValue(string order);
-	void Fleury();
+	void Traverse();
 	void Transfer();
 private:
-	void FleuryDFS(int to_station);
-	void FleuryMain(int to_station);
+	void AddPath();
+	void ResetStationPath();
 	string *station_name;
 	map<string, int>name_to_num;  // 将节点名称映射到节点编号
 	Link **station_link;
-	Stack station_stack;
+	stack<int>path_stack;
 	int station_num_;
 	int **station_path;  // path[][]=-1表示没有路径，path[v][i]存的是从v0到v当前求得的最短路径经过的第i+1个顶点(这是打印最短路径的关键)
 						 // 则v0到v的最短路径即为path[v][0]到p[v][j]直到path[v][j]=-1,路径打印完毕。
 	int station_path_num_;
 	int start_station_, end_station_;
 	int transfer_par;  // 换乘影响参数
+	int visit_num_;
+	int *visit_station;
 };

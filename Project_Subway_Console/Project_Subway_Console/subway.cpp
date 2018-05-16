@@ -3,13 +3,12 @@ using namespace std;
 
 Subway::Subway()
 {
-	this->station_num_ = 1;
+	this->station_num_ = 0;
 	this->transfer_par = 0;
 	this->station_name = new string[STATION_NUM];
-	this->station_stack.station = new int[STATION_NUM];
 	this->station_link = new Link*[STATION_NUM];
 	this->station_path = new int*[STATION_NUM];
-
+	this->visit_station = new int[STATION_NUM];
 	for (int i = 0; i < STATION_NUM; i++) // 除自身外一开始每个点都不可达
 	{
 		station_name[i] = "";
@@ -29,7 +28,7 @@ Subway::Subway()
 
 void Subway::ReadFile()
 {
-	fstream read_file("beijing-subway.txt", ios::in);
+	fstream read_file("D:\\Users\\AS\\Desktop\\beijing-subway.txt", ios::in);
 	if (!read_file.is_open())
 	{
 		cout << "Error: Unable to open file correctly." << endl;
@@ -155,6 +154,7 @@ void Subway::Dijkstra()
 					}
 				}
 
+				/* 是否为换乘优化模式 */
 				if (this->transfer_par)
 				{
 					dis[u] = 0;
@@ -194,6 +194,8 @@ void Subway::PrintPath()
 		if (this->station_path[this->end_station_][i] > -1)
 		{
 			cout << this->station_name[this->station_path[end_station_][i]];
+
+			/* 当前后两条线路名不同说明换乘 */
 			if (i != 0 && this->station_path[this->end_station_][i - 1] > -1
 				&& this->station_path[this->end_station_][i + 1] > -1)
 			{
@@ -500,72 +502,94 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 	cout << "Error: 线路错路！" << endl;
 }
 
-void Subway::ResetValue(string order)
+void Subway::ResetStationPath()
 {
-	if (order == "/d")
+	for (int i = 0; i < STATION_NUM; i++)
 	{
-
-	}
-
-	if (order == "/a")
-	{
-		for (int i = 0; i < STATION_NUM; i++)
+		this->visit_station[i] = 0;  // 0为没有访问过
+		for (int j = 0; j < STATION_NUM; j++)
 		{
-			for (int j = 0; j < STATION_NUM; j++)
+			this->station_path[i][j] = -1;
+		}
+	}
+}
+
+void Subway::AddPath()
+{
+	this->ResetStationPath();
+	this->Dijkstra();
+
+	bool first_flag = true;
+	int station_temp;
+
+	for (int i = 0; i < STATION_NUM; i++)
+	{
+		station_temp = this->station_path[this->end_station_][i];
+		if (station_temp > -1)
+		{
+			if (this->visit_station[station_temp] == 0)
 			{
-				this->station_link[i][j].value = 0;
-				this->station_link[j][i].value = 0;
+				this->visit_num_--;
+				this->visit_station[station_temp] = 1;
 			}
+			if (!first_flag)  // 起始点不入栈
+				this->path_stack.push(station_temp);
+			first_flag = false;
 		}
 	}
 }
 
-void Subway::FleuryDFS(int to_station)
+void Subway::Traverse()
 {
-	this->station_stack.top++;
-	this->station_stack.station[this->station_stack.top] = to_station;
+	this->station_link[311][1].value = 1;
+	this->station_link[1][311].value = 1;
+	this->station_link[311][1].line_name = "S1线";
+	this->station_link[1][311].line_name = "S1线";
 
-	for (int i = 1; i <= this->station_num_; i++)
+	this->visit_num_ = this->station_num_;
+	int from_station = this->start_station_;
+	this->path_stack.push(this->start_station_);
+
+	while (this->visit_num_ > 0)
 	{
-		if (this->station_link[i][to_station].value > 0)
-		{
-			this->station_link[i][to_station].value = this->station_link[to_station][i].value = 0;
-			this->FleuryDFS(i);
-			break;
-		}
-	}
-}
-
-void Subway::FleuryMain(int to_station)
-{
-	int flag;
-	this->station_stack.top = 0;
-	this->station_stack.station[this->station_stack.top] = to_station;
-
-	while (this->station_stack.top >= 0)
-	{
-		flag = 0;
 		for (int i = 1; i <= this->station_num_; i++)
 		{
-			if (this->station_link[this->station_stack.station[this->station_stack.top]][i].value > 0)
+			if (this->visit_station[i] != 1
+				&& from_station != i)
 			{
-				flag = 1;
+				this->start_station_ = from_station;
+				this->end_station_ = i;
+				this->AddPath();  // 在添加路径时记录访问点数
+				from_station = i;
 				break;
 			}
 		}
-		if (!flag)
-		{
-			cout << this->station_name[this->station_stack.station[this->station_stack.top--]] << endl;
-
-		}
-		else
-			this->FleuryDFS(this->station_stack.station[this->station_stack.top--]);
 	}
-}
 
-void Subway::Fleury()
-{
-	this->FleuryMain(this->start_station_);
+	from_station = 1;
+	int temp1, temp2, temp3;
+
+	while (!this->path_stack.empty())
+	{
+		temp1 = this->path_stack.top();
+		this->path_stack.pop();
+		cout << this->station_name[temp1];
+
+		if (from_station == 1)
+			temp3 = temp2 = temp1;
+		if (from_station == 2)
+			temp2 = temp1;
+		if (from_station == 3)
+		{
+			if (this->station_link[temp3][temp2].line_name 
+				!= this->station_link[temp2][temp1].line_name)
+				cout << " 换乘" << this->station_link[temp2][temp1].line_name;
+			from_station = 0;
+		}
+
+		cout << endl;
+		from_station++;
+	}
 }
 
 void Subway::Transfer()
