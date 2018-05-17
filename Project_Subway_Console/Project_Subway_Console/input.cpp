@@ -9,6 +9,11 @@ void Input::InputHandle(int argc, char **argv)
 	{
 		this->from = string(argv[2]);
 	}
+	if (this->order == "/z" && argc == 3)
+	{
+		//this->file_name = argv[2];
+		this->from = string(argv[2]);
+	}
 	else if ((this->order == "/b" || this->order == "/d") && argc == 4)
 	{
 		this->from = string(argv[2]);
@@ -68,4 +73,10 @@ void Input::SelectModel(Subway &subway)
 		subway.PrintPath();
 	}
 
+	/* 检查 /a 输出结果的正确性 */
+	if (this->order == "/z")
+	{
+		subway.ReadFile();
+		subway.CheckTraverse(this->from);
+	}
 }

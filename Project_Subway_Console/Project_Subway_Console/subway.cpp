@@ -12,6 +12,7 @@ Subway::Subway()
 	for (int i = 0; i < STATION_NUM; i++) // 除自身外一开始每个点都不可达
 	{
 		station_name[i] = "";
+		this->visit_station[i] = 0;
 		this->station_link[i] = new Link[STATION_NUM];
 		this->station_path[i] = new int[STATION_NUM];
 
@@ -28,7 +29,7 @@ Subway::Subway()
 
 void Subway::ReadFile()
 {
-	fstream read_file("D:\\Users\\AS\\Desktop\\beijing-subway.txt", ios::in);
+	fstream read_file("beijing-subway.txt", ios::in);
 	if (!read_file.is_open())
 	{
 		cout << "Error: Unable to open file correctly." << endl;
@@ -502,6 +503,11 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 	cout << "Error: 线路错路！" << endl;
 }
 
+void Subway::Transfer()
+{
+	this->transfer_par = 2;
+}
+
 void Subway::ResetStationPath()
 {
 	for (int i = 0; i < STATION_NUM; i++)
@@ -548,11 +554,8 @@ void Subway::Traverse()
 	this->path_list_num = 0;
 	this->visit_num_ = this->station_num_;
 	int from_station = this->start_station_;
-	//this->path_stack.push(this->start_station_);
 	this->path_list[this->path_list_num++] = from_station;
 	int start_ = from_station;
-	for (int i = 0; i < STATION_NUM; i++)
-		this->visit_station[i] = 0;
 
 	while (this->visit_num_ > 0)
 	{
@@ -573,9 +576,10 @@ void Subway::Traverse()
 	this->end_station_ = start_;
 	this->AddPath();
 
+	fstream output_file("beijing_subway_traverse.txt", ios::out);
 	for (int i = 0; i < this->path_list_num; i++)
 	{
-		cout << this->station_name[this->path_list[i]];
+		output_file << this->station_name[this->path_list[i]] << " ";
 		if (i != 0 && this->path_list[i - 1] > -1
 			&& this->path_list[i + 1] > -1)
 		{
@@ -584,13 +588,82 @@ void Subway::Traverse()
 				[this->path_list[i]].line_name
 				!= this->station_link[this->path_list[i]]
 				[this->path_list[i + 1]].line_name)
-				cout << " 换乘" << this->station_link[this->path_list[i]][this->path_list[i + 1]].line_name;
+				output_file << " 换乘" << this->station_link[this->path_list[i]][this->path_list[i + 1]].line_name;
 		}
-		cout << endl;
+		output_file << endl;
 	}
+	output_file.close();
 }
 
-void Subway::Transfer()
+void Subway::CheckTraverse(string file_name)
 {
-	this->transfer_par = 2;
+	fstream read_file(file_name, ios::in);
+
+	if (!read_file.is_open())
+	{
+		cout << "Error: Unable to open file correctly." << endl;
+		exit(-1);
+	}
+
+	this->path_list = new int[3 * STATION_NUM];
+	this->path_list_num = 0;
+	string str_line, temp_str;
+	int pos_space;
+	this->visit_num_ = 0;
+
+	while (getline(read_file, str_line))
+	{
+		pos_space = 0;
+		while (str_line[++pos_space] != ' ');
+		temp_str = str_line.substr(0, pos_space);
+
+		int temp_str_num = this->name_to_num[temp_str];
+
+		if (this->visit_station[temp_str_num] == 0)
+		{
+			this->visit_station[temp_str_num]++;
+			this->visit_num_++;
+		}
+		
+		this->path_list[this->path_list_num++] = temp_str_num;
+	}
+	read_file.close();
+
+	bool false_flag = true;
+	for (int i = 1; i <= this->station_num_; i++)
+	{
+		if (this->visit_station[i] == 0)
+		{
+			if (false_flag)
+			{
+				cout << "False: There are omissions." << endl;
+				false_flag = false;
+			}
+			cout << this->station_name[i] << endl;
+		}
+	}
+	
+	bool error_flag = true;
+	for (int i = 1; i <= this->path_list_num - 2; i++)
+	{
+		int from = this->path_list[i];
+		int to = this->path_list[i + 1];
+		if (this->station_link[from][to].value == INF)
+		{
+			if (error_flag)
+			{
+				cout << "Error:" << endl;
+				error_flag = false;
+			}
+			cout << "From: " << this->station_name[from] << " ";
+			cout << "To: " << this->station_name[to] << endl;
+		}
+	}
+
+	if ((!false_flag) || (!error_flag))
+		exit(-1);
+	if (this->visit_num_ == this->station_num_)
+		cout << "True!" << endl;
+	else  //  当没有进行/a操作时文本应为空
+		cout << "NULL!" << endl;
 }

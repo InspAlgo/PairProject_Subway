@@ -19,8 +19,9 @@ public:
 	void GetTwoStation(string start_station, string end_station);
 	void GetSingleStation(string start_station);
 	void PrintBeijingSubwayLine(string subway_line);
-	void Traverse();
 	void Transfer();
+	void Traverse();
+	void CheckTraverse(string file_name);
 private:
 	void AddPath();
 	void ResetStationPath();
