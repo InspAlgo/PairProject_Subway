@@ -483,7 +483,7 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 
 	if (subway_line == "S1线")
 	{
-		int station[] = { 317, 316, 315, 314, 313, 312, 311, -1 };
+		int station[] = { 317, 316, 315, 314, 313, 312, 311, 1, -1 };
 		cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
 			cout << this->station_name[station[i]] << endl;
@@ -506,7 +506,6 @@ void Subway::ResetStationPath()
 {
 	for (int i = 0; i < STATION_NUM; i++)
 	{
-		this->visit_station[i] = 0;  // 0为没有访问过
 		for (int j = 0; j < STATION_NUM; j++)
 		{
 			this->station_path[i][j] = -1;
@@ -521,19 +520,23 @@ void Subway::AddPath()
 
 	bool first_flag = true;
 	int station_temp;
-
+	int temp1, temp2;
 	for (int i = 0; i < STATION_NUM; i++)
 	{
 		station_temp = this->station_path[this->end_station_][i];
 		if (station_temp > -1)
 		{
-			if (this->visit_station[station_temp] == 0)
+			temp1 = station_temp;
+			if (this->visit_station[station_temp] == 0 
+				&& station_temp <= this->station_num_)
 			{
 				this->visit_num_--;
 				this->visit_station[station_temp] = 1;
 			}
-			if (!first_flag)  // 起始点不入栈
-				this->path_stack.push(station_temp);
+			if (!first_flag)
+				this->path_list[this->path_list_num++] = station_temp;
+			
+			temp2 = station_temp;
 			first_flag = false;
 		}
 	}
@@ -541,54 +544,49 @@ void Subway::AddPath()
 
 void Subway::Traverse()
 {
-	this->station_link[311][1].value = 1;
-	this->station_link[1][311].value = 1;
-	this->station_link[311][1].line_name = "S1线";
-	this->station_link[1][311].line_name = "S1线";
-
+	this->path_list = new int[3 * STATION_NUM];
+	this->path_list_num = 0;
 	this->visit_num_ = this->station_num_;
 	int from_station = this->start_station_;
-	this->path_stack.push(this->start_station_);
+	//this->path_stack.push(this->start_station_);
+	this->path_list[this->path_list_num++] = from_station;
+	int start_ = from_station;
+	for (int i = 0; i < STATION_NUM; i++)
+		this->visit_station[i] = 0;
 
 	while (this->visit_num_ > 0)
 	{
 		for (int i = 1; i <= this->station_num_; i++)
 		{
-			if (this->visit_station[i] != 1
-				&& from_station != i)
+			if (this->visit_station[i] != 1)
 			{
 				this->start_station_ = from_station;
 				this->end_station_ = i;
-				this->AddPath();  // 在添加路径时记录访问点数
+				this->AddPath();  // 在添加路径时注意记录访问点数
 				from_station = i;
 				break;
 			}
 		}
 	}
 
-	from_station = 1;
-	int temp1, temp2, temp3;
+	this->start_station_ = from_station;
+	this->end_station_ = start_;
+	this->AddPath();
 
-	while (!this->path_stack.empty())
+	for (int i = 0; i < this->path_list_num; i++)
 	{
-		temp1 = this->path_stack.top();
-		this->path_stack.pop();
-		cout << this->station_name[temp1];
-
-		if (from_station == 1)
-			temp3 = temp2 = temp1;
-		if (from_station == 2)
-			temp2 = temp1;
-		if (from_station == 3)
+		cout << this->station_name[this->path_list[i]];
+		if (i != 0 && this->path_list[i - 1] > -1
+			&& this->path_list[i + 1] > -1)
 		{
-			if (this->station_link[temp3][temp2].line_name 
-				!= this->station_link[temp2][temp1].line_name)
-				cout << " 换乘" << this->station_link[temp2][temp1].line_name;
-			from_station = 0;
+			if (i != this->path_list_num - 1 
+				&& this->station_link[this->path_list[i - 1]]
+				[this->path_list[i]].line_name
+				!= this->station_link[this->path_list[i]]
+				[this->path_list[i + 1]].line_name)
+				cout << " 换乘" << this->station_link[this->path_list[i]][this->path_list[i + 1]].line_name;
 		}
-
 		cout << endl;
-		from_station++;
 	}
 }
 

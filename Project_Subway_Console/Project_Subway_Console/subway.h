@@ -27,7 +27,8 @@ private:
 	string *station_name;
 	map<string, int>name_to_num;  // 将节点名称映射到节点编号
 	Link **station_link;
-	stack<int>path_stack;
+	int *path_list;
+	int path_list_num;
 	int station_num_;
 	int **station_path;  // path[][]=-1表示没有路径，path[v][i]存的是从v0到v当前求得的最短路径经过的第i+1个顶点(这是打印最短路径的关键)
 						 // 则v0到v的最短路径即为path[v][0]到p[v][j]直到path[v][j]=-1,路径打印完毕。
