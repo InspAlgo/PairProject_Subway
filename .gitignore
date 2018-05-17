@@ -14,7 +14,7 @@ Project_Subway_Console/UnitTest1/Debug/*
 *.db
 *.psess
 *.vspx
-
+*.txt
 
 # Prerequisites
 *.d

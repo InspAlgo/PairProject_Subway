@@ -141,7 +141,7 @@ void Subway::Dijkstra()
 			if (v == this->start_station_)
 				continue;
 			if (!book[v] && this->station_link[u][v].value < INF
-				&& dis[v] >= dis[u] + this->station_link[u][v].value)
+				&& dis[v] > dis[u] + this->station_link[u][v].value)
 			{
 				dis[v] = dis[u] + this->station_link[u][v].value;
 
@@ -172,6 +172,7 @@ void Subway::Dijkstra()
 								dis[u] += this->transfer_par;
 						}
 					}
+					dis[v] = dis[u] + this->station_link[u][v].value;
 				}
 			}
 		}

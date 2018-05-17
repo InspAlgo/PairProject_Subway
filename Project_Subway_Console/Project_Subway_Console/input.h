@@ -4,7 +4,7 @@ using namespace std;
 class Input
 {
 public:
-	void InputHandle(int argc, char **argv);
+	void InputHandle(int argc, char *argv[]);
 	void SelectModel(Subway &subway);
 private:
 	string from;

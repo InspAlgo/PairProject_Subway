@@ -1,7 +1,7 @@
 #include "stdafx.h"
 using namespace std;
 
-void Input::InputHandle(int argc, char **argv)
+void Input::InputHandle(int argc, char *argv[])
 {
 	this->order = string(argv[1]);
 
@@ -9,9 +9,8 @@ void Input::InputHandle(int argc, char **argv)
 	{
 		this->from = string(argv[2]);
 	}
-	if (this->order == "/z" && argc == 3)
+	else if (this->order == "/z" && argc == 3)
 	{
-		//this->file_name = argv[2];
 		this->from = string(argv[2]);
 	}
 	else if ((this->order == "/b" || this->order == "/d") && argc == 4)
