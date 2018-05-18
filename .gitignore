@@ -22,6 +22,16 @@ DLLCS/DLLCS/Release/*
 DLLCS/DLLCS/x64/*
 DLLCS/UnitTest1/x64/*
 DLLCS/UnitTest1/Debug/*
+
+CS_Project_Console/.vs/*
+CS_Project_Console/CS_Project_Console/bin/Debug/*
+CS_Project_Console/CS_Project_Console/bin/Release/*
+CS_Project_Console/CS_Project_Console/bin/x64/*
+CS_Project_Console/CS_Project_Console/obj/*
+CS_Project_Console/CS_Project_Console/Properties/*
+CS_Project_Console/UnitTest1/x64/*
+CS_Project_Console/UnitTest1/Debug/*
+
 *.suo
 *.db
 *.psess
