@@ -1,5 +1,6 @@
 # Personal Configuration
 .vs/*
+!beijing-subway.txt
 Project_Subway_Console/.vs/*
 Project_Subway_Console/Debug/*
 Project_Subway_Console/Release/*
@@ -10,6 +11,17 @@ Project_Subway_Console/Project_Subway_Console/Release/*
 Project_Subway_Console/Project_Subway_Console/x64/*
 Project_Subway_Console/UnitTest1/x64/*
 Project_Subway_Console/UnitTest1/Debug/*
+
+DLLCS/.vs/*
+DLLCS/Debug/*
+DLLCS/Release/*
+DLLCS/x64/*
+DLLCS/TestResults/*
+DLLCS/DLLCS/Debug/*
+DLLCS/DLLCS/Release/*
+DLLCS/DLLCS/x64/*
+DLLCS/UnitTest1/x64/*
+DLLCS/UnitTest1/Debug/*
 *.suo
 *.db
 *.psess
