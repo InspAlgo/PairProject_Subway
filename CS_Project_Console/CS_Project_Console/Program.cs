@@ -17,12 +17,11 @@ namespace CS_Project_Console
         {
             if (args.Length == 2 && args[0].ToLower() == "/g")
             {
-                Console.WriteLine("暂不支持！");
                 //File.WriteAllLines(@"console_input.txt", args, Encoding.Default);
                 //InterFace();
-                //Application.EnableVisualStyles();
-                //Application.SetCompatibleTextRenderingDefault(false);
-                //Application.Run(new MainForm());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
             }
             else if (args.Length == 2 && args[0].ToLower() == "/a")
             {

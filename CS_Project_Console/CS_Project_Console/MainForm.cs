@@ -15,6 +15,12 @@ namespace CS_Project_Console
         public MainForm()
         {
             InitializeComponent();
+            
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
