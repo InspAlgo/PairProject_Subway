@@ -30,52 +30,132 @@ namespace CS_Project_Console
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.pictureBox_background = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_background)).BeginInit();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ModelSelect_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox_Map = new System.Windows.Forms.PictureBox();
+            this.ResetMap_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox_background
+            // menuStrip1
             // 
-            this.pictureBox_background.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox_background.BackgroundImage")));
-            this.pictureBox_background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox_background.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox_background.Name = "pictureBox_background";
-            this.pictureBox_background.Size = new System.Drawing.Size(746, 589);
-            this.pictureBox_background.TabIndex = 0;
-            this.pictureBox_background.TabStop = false;
- 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ModelSelect_ToolStripMenuItem,
+            this.ResetMap_ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 25);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // ModelSelect_ToolStripMenuItem
+            // 
+            this.ModelSelect_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aModel_ToolStripMenuItem1,
+            this.bModel_ToolStripMenuItem1,
+            this.cModel_ToolStripMenuItem1,
+            this.dModel_ToolStripMenuItem1});
+            this.ModelSelect_ToolStripMenuItem.Name = "ModelSelect_ToolStripMenuItem";
+            this.ModelSelect_ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.ModelSelect_ToolStripMenuItem.Text = "模式选择";
+            this.ModelSelect_ToolStripMenuItem.Click += new System.EventHandler(this.ModelSelect_ToolStripMenuItem_Click);
+            // 
+            // aModel_ToolStripMenuItem1
+            // 
+            this.aModel_ToolStripMenuItem1.Name = "aModel_ToolStripMenuItem1";
+            this.aModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.aModel_ToolStripMenuItem1.Text = "/a 模式";
+            this.aModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_aM);
+            // 
+            // bModel_ToolStripMenuItem1
+            // 
+            this.bModel_ToolStripMenuItem1.Name = "bModel_ToolStripMenuItem1";
+            this.bModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.bModel_ToolStripMenuItem1.Text = "/b 模式";
+            this.bModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_bM);
+            // 
+            // cModel_ToolStripMenuItem1
+            // 
+            this.cModel_ToolStripMenuItem1.Name = "cModel_ToolStripMenuItem1";
+            this.cModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.cModel_ToolStripMenuItem1.Text = "/c 模式";
+            this.cModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_cM);
+            // 
+            // dModel_ToolStripMenuItem1
+            // 
+            this.dModel_ToolStripMenuItem1.Name = "dModel_ToolStripMenuItem1";
+            this.dModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.dModel_ToolStripMenuItem1.Text = "/d 模式";
+            this.dModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_dM);
+            // 
+            // pictureBox_Map
+            // 
+            this.pictureBox_Map.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_Map.BackgroundImage = global::CS_Project_Console.Properties.Resources.subway_map;
+            this.pictureBox_Map.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox_Map.Location = new System.Drawing.Point(0, 28);
+            this.pictureBox_Map.Name = "pictureBox_Map";
+            this.pictureBox_Map.Size = new System.Drawing.Size(1050, 689);
+            this.pictureBox_Map.TabIndex = 2;
+            this.pictureBox_Map.TabStop = false;
+            // 
+            // ResetMap_ToolStripMenuItem
+            // 
+            this.ResetMap_ToolStripMenuItem.Name = "ResetMap_ToolStripMenuItem";
+            this.ResetMap_ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.ResetMap_ToolStripMenuItem.Text = "地图复原";
+            this.ResetMap_ToolStripMenuItem.Click += new System.EventHandler(this.Click_ResetMap);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(985, 613);
-            this.Controls.Add(this.pictureBox_background);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1050, 690);
+            this.Controls.Add(this.pictureBox_Map);
+            this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseWheel);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_background)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem ModelSelect_ToolStripMenuItem;
+        private ToolStripMenuItem aModel_ToolStripMenuItem1;
+        private ToolStripMenuItem bModel_ToolStripMenuItem1;
+        private ToolStripMenuItem cModel_ToolStripMenuItem1;
+        private ToolStripMenuItem dModel_ToolStripMenuItem1;
+        private PictureBox pictureBox_Map;
+        private ToolStripMenuItem ResetMap_ToolStripMenuItem;
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pictureBox_background;
 
         /// <summary>
         /// 滚轮缩放地图
         /// </summary>
-        private void MainForm_MouseWheel(object sender, MouseEventArgs e)  
-        {
-            var t = pictureBox_background.Size;
-            t.Width += e.Delta;
-            t.Height += e.Delta;
-            pictureBox_background.Size = t;
-        }
+        //private void MainForm_MouseWheel(object sender, MouseEventArgs e)
+        //{
+        //    var t = pictureBox_background.Size;
+        //    t.Width += e.Delta;
+        //    t.Height += e.Delta;
+        //    pictureBox_background.Size = t;
+        //}
 
 
     }

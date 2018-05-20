@@ -4,6 +4,9 @@
     <StartArguments>"/b"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <StartArguments>"/g" "2号航站楼"</StartArguments>
+    <StartArguments>"/g"</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <StartArguments>"/g"</StartArguments>
   </PropertyGroup>
 </Project>
