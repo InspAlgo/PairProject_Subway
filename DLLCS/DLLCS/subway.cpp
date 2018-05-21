@@ -3,10 +3,12 @@ using namespace std;
 
 Subway::Subway()
 {
+	this->flag_gui = false;
 	this->station_num_ = 0;
 	this->transfer_par = 0;
 	this->station_name = new string[STATION_NUM];
 	this->station_link = new Link*[STATION_NUM];
+	this->position = new Position[STATION_NUM];
 	this->station_path = new int*[STATION_NUM];
 	this->visit_station = new int[STATION_NUM];
 	for (int i = 0; i < STATION_NUM; i++) // 除自身外一开始每个点都不可达
@@ -61,6 +63,8 @@ void Subway::ReadFile()
 			ss_3 << str_line.substr(pos_0 + 1, pos_1 - pos_0 - 1);
 			ss_3 >> pos_station;
 			this->station_name[pos_station] = temp_str;
+			this->position[pos_station].x = pos_x;
+			this->position[pos_station].y = pos_y;
 			this->name_to_num[temp_str] = pos_station;
 			this->station_num_++;
 		}
@@ -184,21 +188,32 @@ void Subway::PrintPath()
 	int flag_output = 0;
 	this->station_path_num_ = 0;
 
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	for (int i = 0; i < STATION_NUM; i++)
 	{
 		if (this->station_path[this->end_station_][i] > -1)
 			this->station_path_num_++;
 	}
-	cout << this->station_path_num_ << endl;
+	if (!this->flag_gui)
+		cout << this->station_path_num_ << endl;
 
 	for (int i = 0; i < STATION_NUM; i++)
 	{
 		if (this->station_path[this->end_station_][i] > -1)
 		{
-			cout << this->station_name[this->station_path[end_station_][i]];
+			if (!this->flag_gui)
+				cout << this->station_name[this->station_path[end_station_][i]];
+			else
+			{
+				output_file << this->position[this->station_path[end_station_][i]].x
+					<< " " << this->position[this->station_path[end_station_][i]].y << endl;
+			}
 
 			/* 当前后两条线路名不同说明换乘 */
-			if (i != 0 && this->station_path[this->end_station_][i - 1] > -1
+			if (!this->flag_gui && i != 0 && this->station_path[this->end_station_][i - 1] > -1
 				&& this->station_path[this->end_station_][i + 1] > -1)
 			{
 				if (this->station_link[this->station_path
@@ -214,18 +229,33 @@ void Subway::PrintPath()
 						[this->end_station_][i + 1]].line_name;
 				}
 			}
-			cout << endl;
+			if (!this->flag_gui)
+				cout << endl;
 
 			flag_output = 1;
 		}
 	}
 
 	if (!flag_output)
-		cout << "Error: No ways!" << endl;
+	{
+		if (!this->flag_gui)
+			cout << "Error: No ways!" << endl;
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "No ways!" << endl;
+		}
+	}
+	if (this->flag_gui)
+		output_file.close();
 }
 
 void Subway::PrintBeijingSubwayLine(string subway_line)
 {
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	if (subway_line == "1号线")
 	{
 		int station[] = {
@@ -234,9 +264,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			13 ,14 ,15, 16, 17 ,18 ,
 			19 ,20 ,21 ,22, 23, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -248,9 +291,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			33, 34, 35, 36, 12,
 			37, 38, 39, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -263,9 +319,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
 			67, 68, 69, 70, 71, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -277,9 +346,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			83, 84, 85, 86, 87, 88, 89,
 			90, 91, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -291,9 +373,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			103, 104, 105, 106, 107, 108, 109,
 			110, 111, 112, 113, 114, 115, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -305,9 +400,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			126, 127, 128, 129, 130, 131,
 			132, 133, 134, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -318,9 +426,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			141, 142, 143, 144, 145, 146,
 			147, 148, 149, 25, 150, 98, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -331,9 +452,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			156, 157, 158, 116, 9,
 			159, 95, 49, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -347,9 +481,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			184, 185, 186, 187, 188, 157, 189, 8,
 			190, 93, 191, 192, 193, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -361,9 +508,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			200, 201, 168, 202, 203,
 			28, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -374,9 +534,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			212, 213, 214, 101, 21, 126, 291, 292,
 			177, 293, 74, 294, 295, 296, 57, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -388,9 +561,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			225, 207, 201, 226, 85,
 			227, 145, 228, 229, 230, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -401,9 +587,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			234, 235, 236, 237, 238,
 			239, 240, 241, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -413,9 +612,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			281, 280, 279, 278, 277, 242,
 			243, 244, 245, 135, 246, 197,-1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -426,9 +638,22 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			251, 252, 253, 254, 255,
 			256, 257, 258, 259, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -438,27 +663,66 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			282, 260, 261, 262, 263, 264,
 			265, 266, 267, 268, 269, 151, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
 	if (subway_line == "机场线")
 	{
 		int station[] = { 28, 170, 270, 271, -1 };
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
 	if (subway_line == "14号线西线")
 	{
 		int station[] = { 276, 275, 274, 273, 272, 156, 188, -1 };
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
@@ -468,40 +732,98 @@ void Subway::PrintBeijingSubwayLine(string subway_line)
 			305, 304, 303, 302, 301,
 			300, 299, 298, 297, 42, -1
 		};
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
 	if (subway_line == "西郊线")
 	{
 		int station[] = { 310, 309, 308, 307, 306, 160, -1 };
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
 	if (subway_line == "S1线")
 	{
 		int station[] = { 317, 316, 315, 314, 313, 312, 311, 1, -1 };
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
 
 	if (subway_line == "燕房线")
 	{
 		int station[] = { 290, 289, 288, 287, 286, 285, 284, 283, 282, -1 };
-		cout << subway_line << endl;
+
+		if (!this->flag_gui)
+			cout << subway_line << endl;
 		for (int i = 0; station[i] != -1; i++)
-			cout << this->station_name[station[i]] << endl;
+		{
+			if (!this->flag_gui)
+				cout << this->station_name[station[i]] << endl;
+			else
+			{
+				output_file << this->position[station[i]].x
+					<< " " << this->position[station[i]].y << endl;
+			}
+		}
+		if (this->flag_gui)
+			output_file.close();
+
 		return;
 	}
-
-	cout << "Error: 线路错路！" << endl;
+	if (!this->flag_gui)
+		cout << "Error: 线路错路！" << endl;
+	else
+	{
+		output_file << "Error" << endl;
+		output_file << "线路错误！" << endl;
+		output_file.close();
+	}
 }
 
 void Subway::Transfer()
@@ -534,7 +856,7 @@ void Subway::AddPath()
 		if (station_temp > -1)
 		{
 			temp1 = station_temp;
-			if (this->visit_station[station_temp] == 0 
+			if (this->visit_station[station_temp] == 0
 				&& station_temp <= this->station_num_)
 			{
 				this->visit_num_--;
@@ -542,7 +864,7 @@ void Subway::AddPath()
 			}
 			if (!first_flag)
 				this->path_list[this->path_list_num++] = station_temp;
-			
+
 			temp2 = station_temp;
 			first_flag = false;
 		}
@@ -578,22 +900,40 @@ void Subway::Traverse()
 	this->AddPath();
 
 	fstream output_file("beijing_subway_traverse.txt", ios::out);
+	fstream output_file2("gui_print.txt", ios::out);
+	if (this->flag_gui)
+		output_file.close();
+	else
+		output_file2.close();
+
 	for (int i = 0; i < this->path_list_num; i++)
 	{
-		output_file << this->station_name[this->path_list[i]] << " ";
-		if (i != 0 && this->path_list[i - 1] > -1
+		if (!this->flag_gui)
+			output_file << this->station_name[this->path_list[i]] << " ";
+		else
+		{
+			output_file2 << this->position[this->path_list[i]].x
+				<< " " << this->position[this->path_list[i]].y << endl;
+		}
+
+		if (!this->flag_gui && i != 0 && this->path_list[i - 1] > -1
 			&& this->path_list[i + 1] > -1)
 		{
-			if (i != this->path_list_num - 1 
+			if (i != this->path_list_num - 1
 				&& this->station_link[this->path_list[i - 1]]
 				[this->path_list[i]].line_name
 				!= this->station_link[this->path_list[i]]
 				[this->path_list[i + 1]].line_name)
 				output_file << " 换乘" << this->station_link[this->path_list[i]][this->path_list[i + 1]].line_name;
 		}
-		output_file << endl;
+		if (!this->flag_gui)
+			output_file << endl;
 	}
-	output_file.close();
+
+	if (!this->flag_gui)
+		output_file.close();
+	else
+		output_file2.close();
 }
 
 void Subway::CheckTraverse(string file_name)
@@ -625,7 +965,7 @@ void Subway::CheckTraverse(string file_name)
 			this->visit_station[temp_str_num]++;
 			this->visit_num_++;
 		}
-		
+
 		this->path_list[this->path_list_num++] = temp_str_num;
 	}
 	read_file.close();
@@ -643,7 +983,7 @@ void Subway::CheckTraverse(string file_name)
 			cout << this->station_name[i] << endl;
 		}
 	}
-	
+
 	bool error_flag = true;
 	for (int i = 1; i <= this->path_list_num - 2; i++)
 	{

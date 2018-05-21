@@ -9,6 +9,12 @@ struct Link
 	string line_name;  // 地铁线名称
 };
 
+struct Position
+{
+	int x;
+	int y;
+};
+
 class Subway
 {
 public:
@@ -22,12 +28,14 @@ public:
 	void Transfer();
 	void Traverse();
 	void CheckTraverse(string file_name);
+	bool flag_gui;
 private:
 	void AddPath();
 	void ResetStationPath();
 	string *station_name;
 	map<string, int>name_to_num;  // 将节点名称映射到节点编号
 	Link **station_link;
+	Position *position;
 	int *path_list;
 	int path_list_num;
 	int station_num_;
