@@ -79,5 +79,19 @@ namespace CS_Project_Console
                 }
             }
         }
+
+        /// <summary>
+        /// 将要显示的站点标出
+        /// </summary>
+        /// <param name="list"></param>
+        public static void DrawShow(At[] list)
+        {
+            if (list == null)
+                return;
+
+            float x1 = list[0].x;
+            float y1 = list[0].y;
+            DrawTool.DrawCircle(MainForm.graphics, x1, y1, (float)(1), 10);
+        }
     }
 }

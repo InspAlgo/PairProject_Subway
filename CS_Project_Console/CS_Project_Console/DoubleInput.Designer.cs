@@ -111,9 +111,9 @@
         private System.Windows.Forms.Button Button_DoubleInput;
 
 
-        public static bool flag_select = false;
-        public static string double_input_text_from = "";
-        public static string double_input_text_to = "";
+        public static bool flag_select = false;  // 判断用户是否选择了'确定'按钮，是则true
+        public static string double_input_text_from = "";  // 接收起点站字符串
+        public static string double_input_text_to = "";  // 接收终点站字符串
         private System.Windows.Forms.Label label_from;
         private System.Windows.Forms.Label label_to;
     }

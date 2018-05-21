@@ -111,9 +111,29 @@ namespace CS_Project_Console
                 MessageBox.Show("输入不为空！");
         }
 
+        private void Click_stationShow(object sender, EventArgs e)
+        {
+            Form single_input_form = new SingleInput();
+            single_input_form.ShowDialog();
+            if (SingleInput.flag_select)
+            {
+                string[] single_output = new String[2];
+                single_output[0] = "/s";
+                single_output[1] = SingleInput.single_input_text;
+                File.WriteAllLines(@"console_input.txt", single_output, Encoding.Default);
+                Program.InterFace2();
+                At[] file_list = Program.ReadTextLine();
+                ResetMap();
+                DrawTool.DrawShow(file_list);
+            }
+            else
+                MessageBox.Show("输入不为空！");
+        }
+
         private void Click_ResetMap(object sender, EventArgs e)
         {
             ResetMap();
+            GC.Collect();
         }
 
         /// <summary>

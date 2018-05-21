@@ -36,8 +36,9 @@ namespace CS_Project_Console
             this.bModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox_Map = new System.Windows.Forms.PictureBox();
             this.ResetMap_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox_Map = new System.Windows.Forms.PictureBox();
+            this.stationShow_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +60,8 @@ namespace CS_Project_Console
             this.aModel_ToolStripMenuItem1,
             this.bModel_ToolStripMenuItem1,
             this.cModel_ToolStripMenuItem1,
-            this.dModel_ToolStripMenuItem1});
+            this.dModel_ToolStripMenuItem1,
+            this.stationShow_ToolStripMenuItem});
             this.ModelSelect_ToolStripMenuItem.Name = "ModelSelect_ToolStripMenuItem";
             this.ModelSelect_ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.ModelSelect_ToolStripMenuItem.Text = "模式选择";
@@ -68,30 +70,37 @@ namespace CS_Project_Console
             // aModel_ToolStripMenuItem1
             // 
             this.aModel_ToolStripMenuItem1.Name = "aModel_ToolStripMenuItem1";
-            this.aModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.aModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.aModel_ToolStripMenuItem1.Text = "/a 模式";
             this.aModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_aM);
             // 
             // bModel_ToolStripMenuItem1
             // 
             this.bModel_ToolStripMenuItem1.Name = "bModel_ToolStripMenuItem1";
-            this.bModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.bModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.bModel_ToolStripMenuItem1.Text = "/b 模式";
             this.bModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_bM);
             // 
             // cModel_ToolStripMenuItem1
             // 
             this.cModel_ToolStripMenuItem1.Name = "cModel_ToolStripMenuItem1";
-            this.cModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.cModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.cModel_ToolStripMenuItem1.Text = "/c 模式";
             this.cModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_cM);
             // 
             // dModel_ToolStripMenuItem1
             // 
             this.dModel_ToolStripMenuItem1.Name = "dModel_ToolStripMenuItem1";
-            this.dModel_ToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.dModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.dModel_ToolStripMenuItem1.Text = "/d 模式";
             this.dModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_dM);
+            // 
+            // ResetMap_ToolStripMenuItem
+            // 
+            this.ResetMap_ToolStripMenuItem.Name = "ResetMap_ToolStripMenuItem";
+            this.ResetMap_ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.ResetMap_ToolStripMenuItem.Text = "地图复原";
+            this.ResetMap_ToolStripMenuItem.Click += new System.EventHandler(this.Click_ResetMap);
             // 
             // pictureBox_Map
             // 
@@ -106,12 +115,12 @@ namespace CS_Project_Console
             this.pictureBox_Map.TabIndex = 2;
             this.pictureBox_Map.TabStop = false;
             // 
-            // ResetMap_ToolStripMenuItem
+            // stationShow_ToolStripMenuItem
             // 
-            this.ResetMap_ToolStripMenuItem.Name = "ResetMap_ToolStripMenuItem";
-            this.ResetMap_ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.ResetMap_ToolStripMenuItem.Text = "地图复原";
-            this.ResetMap_ToolStripMenuItem.Click += new System.EventHandler(this.Click_ResetMap);
+            this.stationShow_ToolStripMenuItem.Name = "stationShow_ToolStripMenuItem";
+            this.stationShow_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stationShow_ToolStripMenuItem.Text = "站点显示";
+            this.stationShow_ToolStripMenuItem.Click += new System.EventHandler(this.Click_stationShow);
             // 
             // MainForm
             // 
@@ -126,7 +135,7 @@ namespace CS_Project_Console
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "InspAlgo · Beijing Subway";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -146,17 +155,6 @@ namespace CS_Project_Console
 
         #endregion
 
-        /// <summary>
-        /// 滚轮缩放地图
-        /// </summary>
-        //private void MainForm_MouseWheel(object sender, MouseEventArgs e)
-        //{
-        //    var t = pictureBox_background.Size;
-        //    t.Width += e.Delta;
-        //    t.Height += e.Delta;
-        //    pictureBox_background.Size = t;
-        //}
-
-
+        private ToolStripMenuItem stationShow_ToolStripMenuItem;
     }
 }
