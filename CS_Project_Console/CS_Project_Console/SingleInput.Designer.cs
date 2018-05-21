@@ -39,6 +39,7 @@
             this.textBox_SingleInput.Name = "textBox_SingleInput";
             this.textBox_SingleInput.Size = new System.Drawing.Size(202, 21);
             this.textBox_SingleInput.TabIndex = 0;
+            this.textBox_SingleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_SI_KeyDown);
             // 
             // button1
             // 

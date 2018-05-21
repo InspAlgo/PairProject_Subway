@@ -38,5 +38,21 @@ namespace CS_Project_Console
             this.Close();
         }
 
+        /// <summary>
+        /// 回车确定功能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBox1_DI_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Button_DI_Click(sender, e);  // 调用确定按钮的事件触发函数
+        }
+
+        private void textBox2_DI_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Button_DI_Click(sender, e);
+        }
     }
 }

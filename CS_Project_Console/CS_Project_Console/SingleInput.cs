@@ -27,5 +27,16 @@ namespace CS_Project_Console
                 SingleInput.flag_select = true;
             this.Close();
         }
+
+        /// <summary>
+        /// 回车确定功能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBox_SI_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Button_SI_Click(sender, e);  // 调用确定按钮的事件触发功能
+        }
     }
 }

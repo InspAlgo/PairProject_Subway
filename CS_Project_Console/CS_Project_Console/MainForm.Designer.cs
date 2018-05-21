@@ -36,9 +36,9 @@ namespace CS_Project_Console
             this.bModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dModel_ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.stationShow_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetMap_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox_Map = new System.Windows.Forms.PictureBox();
-            this.stationShow_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
             this.SuspendLayout();
@@ -70,30 +70,37 @@ namespace CS_Project_Console
             // aModel_ToolStripMenuItem1
             // 
             this.aModel_ToolStripMenuItem1.Name = "aModel_ToolStripMenuItem1";
-            this.aModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.aModel_ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.aModel_ToolStripMenuItem1.Text = "/a 模式";
             this.aModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_aM);
             // 
             // bModel_ToolStripMenuItem1
             // 
             this.bModel_ToolStripMenuItem1.Name = "bModel_ToolStripMenuItem1";
-            this.bModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.bModel_ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.bModel_ToolStripMenuItem1.Text = "/b 模式";
             this.bModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_bM);
             // 
             // cModel_ToolStripMenuItem1
             // 
             this.cModel_ToolStripMenuItem1.Name = "cModel_ToolStripMenuItem1";
-            this.cModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.cModel_ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.cModel_ToolStripMenuItem1.Text = "/c 模式";
             this.cModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_cM);
             // 
             // dModel_ToolStripMenuItem1
             // 
             this.dModel_ToolStripMenuItem1.Name = "dModel_ToolStripMenuItem1";
-            this.dModel_ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.dModel_ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.dModel_ToolStripMenuItem1.Text = "/d 模式";
             this.dModel_ToolStripMenuItem1.Click += new System.EventHandler(this.Click_dM);
+            // 
+            // stationShow_ToolStripMenuItem
+            // 
+            this.stationShow_ToolStripMenuItem.Name = "stationShow_ToolStripMenuItem";
+            this.stationShow_ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.stationShow_ToolStripMenuItem.Text = "站点显示";
+            this.stationShow_ToolStripMenuItem.Click += new System.EventHandler(this.Click_stationShow);
             // 
             // ResetMap_ToolStripMenuItem
             // 
@@ -109,18 +116,11 @@ namespace CS_Project_Console
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_Map.BackgroundImage = global::CS_Project_Console.Properties.Resources.subway_map;
             this.pictureBox_Map.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox_Map.Location = new System.Drawing.Point(0, 28);
+            this.pictureBox_Map.Location = new System.Drawing.Point(0, 24);
             this.pictureBox_Map.Name = "pictureBox_Map";
-            this.pictureBox_Map.Size = new System.Drawing.Size(1050, 689);
+            this.pictureBox_Map.Size = new System.Drawing.Size(1050, 667);
             this.pictureBox_Map.TabIndex = 2;
             this.pictureBox_Map.TabStop = false;
-            // 
-            // stationShow_ToolStripMenuItem
-            // 
-            this.stationShow_ToolStripMenuItem.Name = "stationShow_ToolStripMenuItem";
-            this.stationShow_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.stationShow_ToolStripMenuItem.Text = "站点显示";
-            this.stationShow_ToolStripMenuItem.Click += new System.EventHandler(this.Click_stationShow);
             // 
             // MainForm
             // 

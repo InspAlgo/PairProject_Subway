@@ -42,6 +42,7 @@
             this.textBox1_DoubleInput.Size = new System.Drawing.Size(131, 21);
             this.textBox1_DoubleInput.TabIndex = 0;
             this.textBox1_DoubleInput.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1_DoubleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_DI_KeyDown);
             // 
             // textBox2_DoubleInput
             // 
@@ -49,6 +50,7 @@
             this.textBox2_DoubleInput.Name = "textBox2_DoubleInput";
             this.textBox2_DoubleInput.Size = new System.Drawing.Size(131, 21);
             this.textBox2_DoubleInput.TabIndex = 1;
+            this.textBox2_DoubleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_DI_KeyDown);
             // 
             // Button_DoubleInput
             // 
