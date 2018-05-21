@@ -63,6 +63,9 @@ namespace CS_Project_Console
         /// <param name="list"></param>
         public static void Drawing(At[] list)
         {
+            if (list == null)
+                return;
+
             for (int i = 0; i < At.num; i++)
             {
                 float x1 = list[i].x;

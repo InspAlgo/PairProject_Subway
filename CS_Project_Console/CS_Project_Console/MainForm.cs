@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS_Project_Console.Properties;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,8 +43,9 @@ namespace CS_Project_Console
                 single_output[0] = "/a";
                 single_output[1] = SingleInput.single_input_text;
                 File.WriteAllLines(@"console_input.txt", single_output, Encoding.Default);
-                //Program.InterFace();
-                At[] file_list = Program.ReadTextLine(@"gui_print.txt");
+                Program.InterFace2();
+                At[] file_list = Program.ReadTextLine();
+                ResetMap();
                 DrawTool.Drawing(file_list);
             }
             else
@@ -60,7 +62,10 @@ namespace CS_Project_Console
                 single_output[0] = "/c";
                 single_output[1] = SingleInput.single_input_text;
                 File.WriteAllLines(@"console_input.txt", single_output, Encoding.Default);
-                Program.InterFace();
+                Program.InterFace2();
+                At[] file_list = Program.ReadTextLine();
+                ResetMap();
+                DrawTool.Drawing(file_list);
             }
             else
                 MessageBox.Show("输入不为空！");
@@ -77,7 +82,10 @@ namespace CS_Project_Console
                 double_output[1] = DoubleInput.double_input_text_from;
                 double_output[2] = DoubleInput.double_input_text_to;
                 File.WriteAllLines(@"console_input.txt", double_output, Encoding.Default);
-                Program.InterFace();
+                Program.InterFace2();
+                At[] file_list = Program.ReadTextLine();
+                ResetMap();
+                DrawTool.Drawing(file_list);
             }
             else
                 MessageBox.Show("输入不为空！");
@@ -94,7 +102,10 @@ namespace CS_Project_Console
                 double_output[1] = DoubleInput.double_input_text_from;
                 double_output[2] = DoubleInput.double_input_text_to;
                 File.WriteAllLines(@"console_input.txt", double_output, Encoding.Default);
-                Program.InterFace();
+                Program.InterFace2();
+                At[] file_list = Program.ReadTextLine();
+                ResetMap();
+                DrawTool.Drawing(file_list);
             }
             else
                 MessageBox.Show("输入不为空！");
@@ -102,7 +113,18 @@ namespace CS_Project_Console
 
         private void Click_ResetMap(object sender, EventArgs e)
         {
-            MainForm.graphics.Clear(BackColor);
+            ResetMap();
+        }
+
+        /// <summary>
+        /// 地图复原，使用原地图覆盖
+        /// </summary>
+        public void ResetMap()
+        {
+            Bitmap bitmap = new Bitmap(Resources.subway_map);
+            Rectangle r = new Rectangle(0, 0,
+                this.pictureBox_Map.Size.Width, this.pictureBox_Map.Size.Height);
+            MainForm.graphics.DrawImage(bitmap, r);  // 使用原地图覆盖
         }
     }
 }

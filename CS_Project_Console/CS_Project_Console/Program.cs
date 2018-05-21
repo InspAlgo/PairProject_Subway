@@ -44,40 +44,43 @@ namespace CS_Project_Console
             }
         }
 
+        /// <summary>
+        /// 控制台使用的DLL调用函数
+        /// </summary>
+        [DllImport("DLLCS.dll", EntryPoint = "ConsoleInterface")]
+        public static extern void InterFace();
 
         /// <summary>
-        /// 调用DLL文件及使用的函数
+        /// 界面使用的DLL调用函数
         /// </summary>
-        [DllImport("DLLCS.dll", EntryPoint = "Interface")]
-        public static extern void InterFace();
+        [DllImport("DLLCS.dll", EntryPoint = "GUIInterface")]
+        public static extern void InterFace2();
 
         /// <summary>
         /// 按行读取文本文件内容，返回一个ArrayList，每一个元素是一行内容
         /// </summary>
         /// <param name="file_path"></param>
         /// <returns></returns>
-        public static At[] ReadTextLine(string file_path)
+        public static At[] ReadTextLine()
         {
-            try
+            StreamReader sr = new StreamReader(@"gui_print.txt", Encoding.Default);
+            String line;
+            At[] station_at = new At[900];
+            At.num = 0;
+            while ((line = sr.ReadLine()) != null)
             {
-                StreamReader sr = new StreamReader(file_path, Encoding.Default);
-                String line;
-                At[] station_at = new At[900];
-                At.num = 0;
-                while ((line = sr.ReadLine()) != null)
+                if (line.Equals("Error") == true)
                 {
-                    int flag_space = line.IndexOf(' ');
-                    float.TryParse(line.Substring(0, flag_space), out station_at[At.num].x);
-                    float.TryParse(line.Substring(flag_space + 1), out station_at[At.num].y);
-                    At.num++;
+                    MessageBox.Show(sr.ReadLine());
+                    return null;
                 }
-                return station_at;
+                        
+                int flag_space = line.IndexOf(' ');
+                float.TryParse(line.Substring(0, flag_space), out station_at[At.num].x);
+                float.TryParse(line.Substring(flag_space + 1), out station_at[At.num].y);
+                At.num++;
             }
-            catch
-            {
-                Console.WriteLine("文件读取失败");
-                return null;
-            }
+            return station_at;
         }
     }
 }
