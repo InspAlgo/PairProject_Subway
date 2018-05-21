@@ -4,6 +4,7 @@ using namespace std;
 Subway::Subway()
 {
 	this->flag_gui = false;
+	this->flag_exit = false;
 	this->station_num_ = 0;
 	this->transfer_par = 0;
 	this->station_name = new string[STATION_NUM];
@@ -32,10 +33,26 @@ Subway::Subway()
 void Subway::ReadFile()
 {
 	fstream read_file("beijing-subway.txt", ios::in);
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	if (!read_file.is_open())
 	{
-		cout << "Error: Unable to open file correctly." << endl;
-		exit(-1);
+		if (!this->flag_gui)
+		{
+			cout << "Error: Unable to open file correctly." << endl;
+			exit(-1);
+		}
+
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "Unable to open file correctly in beijing-subway.txt." << endl;
+			output_file.close();
+			this->flag_exit = true;
+			return;
+		}
 	}
 	bool flag_file = false;
 	int pos_0, pos_1, pos_2, pos_3;
@@ -94,18 +111,66 @@ void Subway::ReadFile()
 	}
 
 	read_file.close();
+	if (this->flag_gui)
+		output_file.close();
 }
 
 void Subway::GetTwoStation(string start_station, string end_station)
 {
+	fflush(stdout);
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	this->start_station_ = this->name_to_num[start_station];
 	this->end_station_ = this->name_to_num[end_station];
+	if (!this->start_station_ || !this->end_station_)
+	{
+		if (!this->flag_gui)
+		{
+			cout << "Error: Õ¾Ãû´íÎó£¡" << endl;
+			exit(-1);
+		}
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "Õ¾Ãû´íÎó£¡" << endl;
+			output_file.close();
+			this->flag_exit = true;
+			return;
+		}
+	}
+	if (this->flag_gui)
+		output_file.close();
 }
 
 void Subway::GetSingleStation(string start_station)
 {
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	this->start_station_ = this->name_to_num[start_station];
 	this->end_station_ = 0;
+
+	if (!this->start_station_)
+	{
+		if (!this->flag_gui)
+		{
+			cout << "Error: ÊäÈë´íÎó£¡" << endl;
+			exit(-1);
+		}
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "ÊäÈë´íÎó£¡" << endl;
+			output_file.close();
+			this->flag_exit = true;
+			return;
+		}
+	}
+	if (this->flag_gui)
+		output_file.close();
 }
 
 void Subway::Dijkstra()
@@ -244,10 +309,9 @@ void Subway::PrintPath()
 		{
 			output_file << "Error" << endl;
 			output_file << "No ways!" << endl;
+			output_file.close();
 		}
 	}
-	if (this->flag_gui)
-		output_file.close();
 }
 
 void Subway::PrintBeijingSubwayLine(string subway_line)
@@ -873,6 +937,13 @@ void Subway::AddPath()
 
 void Subway::Traverse()
 {
+	fstream output_file("beijing_subway_traverse.txt", ios::out);
+	fstream output_file2("gui_print.txt", ios::out);
+	if (this->flag_gui)
+		output_file.close();
+	else
+		output_file2.close();
+
 	this->path_list = new int[3 * STATION_NUM];
 	this->path_list_num = 0;
 	this->visit_num_ = this->station_num_;
@@ -898,13 +969,6 @@ void Subway::Traverse()
 	this->start_station_ = from_station;
 	this->end_station_ = start_;
 	this->AddPath();
-
-	fstream output_file("beijing_subway_traverse.txt", ios::out);
-	fstream output_file2("gui_print.txt", ios::out);
-	if (this->flag_gui)
-		output_file.close();
-	else
-		output_file2.close();
 
 	for (int i = 0; i < this->path_list_num; i++)
 	{

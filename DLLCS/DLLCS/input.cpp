@@ -4,9 +4,20 @@ using namespace std;
 void Input::InputHandle()
 {
 	fstream read_file("console_input.txt", ios::in);
+	fstream output_file("gui_print.txt", ios::out);
+	if (!this->flag_gui)
+		output_file.close();
+
 	if (!read_file.is_open())
 	{
-		cout << "Error: Unable to open file correctly." << endl;
+		if (!this->flag_gui)
+			cout << "Error: Unable to open file correctly." << endl;
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "Unable to open file correctly in console_input.txt." << endl;
+			output_file.close();
+		}
 		exit(-1);
 	}
 
@@ -32,8 +43,17 @@ void Input::InputHandle()
 	else
 	{
 		read_file.close();
-		cout << "Error: Invalid input parameter." << endl
-			<< "Please try again!" << endl;
+		if (!this->flag_gui)
+		{
+			cout << "Error: Invalid input parameter." << endl
+				<< "Please try again!" << endl;
+		}
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "Invalid input parameter. Please try again!" << endl;
+			output_file.close();
+		}
 		exit(-1);
 	}
 
@@ -41,9 +61,19 @@ void Input::InputHandle()
 
 	if (this->from == this->to)
 	{
-		cout << "0." << endl;
+		if (!this->flag_gui)
+			cout << "0." << endl;
+		else
+		{
+			output_file << "Error" << endl;
+			output_file << "终点不应又同与起点！" << endl;
+			output_file.close();
+		}
 		exit(0);
 	}
+
+	if (this->flag_gui)
+		output_file.close();
 }
 
 void Input::SelectModel(Subway &subway)
@@ -53,7 +83,8 @@ void Input::SelectModel(Subway &subway)
 	{
 		subway.ReadFile();
 		subway.GetSingleStation(this->from);
-		subway.Traverse();
+		if (!subway.flag_exit)
+			subway.Traverse();
 	}
 
 	/* 求任意两个站点的最短路径 */
@@ -61,8 +92,11 @@ void Input::SelectModel(Subway &subway)
 	{
 		subway.ReadFile();
 		subway.GetTwoStation(this->from, this->to);
-		subway.Dijkstra();
-		subway.PrintPath();
+		if (!subway.flag_exit)
+		{
+			subway.Dijkstra();
+			subway.PrintPath();
+		}
 	}
 
 	/* 打印某条地铁线上所有站点 */
@@ -77,9 +111,12 @@ void Input::SelectModel(Subway &subway)
 	{
 		subway.ReadFile();
 		subway.GetTwoStation(this->from, this->to);
-		subway.Transfer();
-		subway.Dijkstra();
-		subway.PrintPath();
+		if (!subway.flag_exit)
+		{
+			subway.Transfer();
+			subway.Dijkstra();
+			subway.PrintPath();
+		}
 	}
 
 	/* 检查 /a 输出结果的正确性 */

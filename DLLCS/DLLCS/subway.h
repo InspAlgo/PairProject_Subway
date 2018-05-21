@@ -29,6 +29,7 @@ public:
 	void Traverse();
 	void CheckTraverse(string file_name);
 	bool flag_gui;
+	bool flag_exit;
 private:
 	void AddPath();
 	void ResetStationPath();
