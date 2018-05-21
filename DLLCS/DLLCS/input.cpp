@@ -40,6 +40,10 @@ void Input::InputHandle()
 	{
 		getline(read_file, this->from);
 	}
+	else if (this->flag_gui && this->order == "/s")
+	{
+		getline(read_file, this->from);
+	}
 	else
 	{
 		read_file.close();
@@ -124,5 +128,14 @@ void Input::SelectModel(Subway &subway)
 	{
 		subway.ReadFile();
 		subway.CheckTraverse(this->from);
+	}
+
+	/* 以文本输出GUI中站点坐标 */
+	if (this->flag_gui && this->order == "/s")
+	{
+		subway.ReadFile();
+		subway.GetSingleStation(this->from);
+		if (!subway.flag_exit)
+			subway.PrintStationPostion();
 	}
 }

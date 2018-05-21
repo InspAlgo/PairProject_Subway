@@ -144,6 +144,16 @@ void Subway::GetTwoStation(string start_station, string end_station)
 		output_file.close();
 }
 
+void Subway::PrintStationPostion()
+{
+	fstream output_file("gui_print.txt", ios::out);
+
+	output_file << this->position[this->start_station_].x
+		<< " " << this->position[this->start_station_].y << endl;
+
+	output_file.close();
+}
+
 void Subway::GetSingleStation(string start_station)
 {
 	fstream output_file("gui_print.txt", ios::out);

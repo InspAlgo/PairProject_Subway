@@ -28,6 +28,7 @@ public:
 	void Transfer();
 	void Traverse();
 	void CheckTraverse(string file_name);
+	void PrintStationPostion();
 	bool flag_gui;
 	bool flag_exit;
 private:
