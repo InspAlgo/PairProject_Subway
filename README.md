@@ -4,7 +4,7 @@
 结对项目博客：[软件工程基础课-结对项目-地铁](https://blog.csdn.net/qq_38597315/article/details/80224637)  
 结对项目纪实：[软件工程基础课-结对项目纪实](https://blog.csdn.net/qq_38597315/article/details/80229197)
 
-v1.1.0：[Beijing Subway](https://github.com/InspAlgo/PairProject_Subway/releases)
+v1.1.1：[Beijing Subway](https://github.com/InspAlgo/PairProject_Subway/releases)
 ***
 
 ## 一、文件说明

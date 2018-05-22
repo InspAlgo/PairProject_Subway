@@ -1,6 +1,8 @@
 # Personal Configuration
 .vs/*
 !beijing-subway.txt
+!Release/*.exe
+!Release/*.dll
 Project_Subway_Console/.vs/*
 Project_Subway_Console/Debug/*
 Project_Subway_Console/Release/*
